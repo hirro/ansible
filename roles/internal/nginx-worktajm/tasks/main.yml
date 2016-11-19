@@ -69,9 +69,6 @@
 - name: Verify NGINX configuration file
   shell: /usr/sbin/nginx -t  
 
-- name: Make sure nginx service is started
-  service: name=nginx state=started enabled=yes
-
 - name: Check if Service Exists
   stat: path=/etc/init.d/firewalld
   register: firewalld_service_status

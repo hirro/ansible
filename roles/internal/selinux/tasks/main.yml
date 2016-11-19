@@ -16,4 +16,5 @@
 - name: Make sure SELinux is in enforcing mode
   selinux: policy=targeted state=enforcing
   notify: 
-  - reboot
+  - Restart server
+  - Waiting for server to come back

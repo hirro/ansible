@@ -7,6 +7,8 @@
   # max_fail_percentage: 0
   # serial: 1
   become: yes
+  roles:
+  - docker-python
   - mongodb-cluster
 
 
