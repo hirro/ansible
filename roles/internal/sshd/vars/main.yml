@@ -1,0 +1,3 @@
+ssh_users:
+  - name: jiar
+    key: "{{ lookup('file', 'jiar.pub') }}"

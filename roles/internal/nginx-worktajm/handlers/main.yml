@@ -1,0 +1,9 @@
+---
+# Handler for the nginx.
+# See http://docs.ansible.com/playbooks_intro.html for more information about handlers.
+
+- name: restart nginx
+  service: name=nginx state=restarted
+
+- name: restart firewalld
+  service: name=firewalld state=restarted

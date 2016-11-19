@@ -1,0 +1,5 @@
+- src: geerlingguy.repo-epel
+- src: fcsonline.port-knocking
+- src: https://github.com/hirro/ansible-role-fail2ban
+  name: resmo.fail2ban
+- src: resmo.ntp

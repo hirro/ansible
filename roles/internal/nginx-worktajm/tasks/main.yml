@@ -1,0 +1,84 @@
+- name: Adding NGINX yum repository
+  yum_repository:
+    name: nginx
+    description: Docker Repository
+    baseurl: http://nginx.org/packages/centos/7/$basearch/
+    gpgcheck: no
+    enabled: yes
+  notify: 
+  - restart nginx    
+
+- name: install epel-release
+  yum: name=epel-release state=present
+  notify: 
+  - restart nginx
+
+- name: upgrade NGINX package
+  yum: name=nginx state=latest
+  notify: 
+  - restart nginx
+
+- name: install nginx
+  yum: name=nginx state=present
+  notify: 
+  - restart nginx
+
+- seport: ports=443 proto=tcp setype=http_port_t state=present
+  when: ansible_system_vendor != "DigitalOcean2"
+  notify: 
+  - restart nginx
+
+- name: Create NGINX keys directory
+  file: path=/etc/nginx/keys/ state=directory
+  notify: 
+  - restart nginx
+
+- name: Copy NGINX server.key
+  copy: content="{{vault_private_ssl_key}}" dest=/etc/nginx/keys/server.key mode="u+r"
+  notify: 
+  - restart nginx
+
+- name: Copy NGINX server.crt
+  copy: src=server.crt dest=/etc/nginx/keys/server.crt mode="u+r"
+  notify: 
+  - restart nginx
+
+- name: Copy NGINX dh.param
+  copy: src=dhparam.pem dest=/etc/nginx/keys/dhparam.pem mode="u+r"
+  notify: 
+  - restart nginx
+
+- name: Copy trustchain for OCSP stapling
+  copy: src=trustchain.crt dest=/etc/nginx/keys/trustchain.crt
+  notify: 
+  - restart nginx
+
+- name: Create NGINX include directory
+  file: path=/etc/nginx/include/ state=directory
+
+- name: Apply template for ssl.conf
+  template: src=ssl.conf.j2 dest=/etc/nginx/conf.d/ssl.conf mode="u+r"
+  notify: 
+  - restart nginx
+
+- name: Copy security headers
+  template: src=security-headers.conf.j2 dest=/etc/nginx/include/security-headers.conf mode="u+r"
+  notify: 
+  - restart nginx 
+
+- name: Verify NGINX configuration file
+  shell: /usr/sbin/nginx -t  
+
+- name: Make sure nginx service is started
+  service: name=nginx state=started enabled=yes
+
+- name: Check if Service Exists
+  stat: path=/etc/init.d/firewalld
+  register: firewalld_service_status
+
+- name: Allow HTTPS though firewall
+  firewalld: service=https permanent=true state=enabled
+  when: firewalld_service_status.stat.exists
+  notify: 
+  - restart firewalld  
+

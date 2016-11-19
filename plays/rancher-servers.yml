@@ -1,0 +1,12 @@
+---
+# This playbook deploys the whole application stack in this site.  
+
+# Apply common configuration to worktajm-nginx-
+
+- hosts: rancher-servers
+  # max_fail_percentage: 0
+  # serial: 1
+  become: yes
+  - mongodb-cluster
+
+

@@ -1,0 +1,28 @@
+- name: Adding Docker yum repository
+  yum_repository:
+    name: dockerrepo
+    description: Docker Repository
+    baseurl: https://yum.dockerproject.org/repo/main/centos/$releasever/
+    gpgcheck: yes
+    enabled: yes
+    gpgkey: https://yum.dockerproject.org/gpg
+
+- name: Installing docker engine
+  yum: name=docker-engine state=present 
+
+- name: Start and enable Docker service
+  service: name=docker state=started enabled=yes
+
+- name: Adding list of users allowed to manage Docker
+  user: name={{ item }} group=docker append=yes
+  with_items:
+     - jiar
+
+# - name: Run consul node
+#   docker:
+#     name: swarm
+#     image: swarm
+#     command: "join --advertise {{private_ip}}:4000 consul://{{private_ip}}:8500"
+#     state: started
+#   tags:
+#     - swarm

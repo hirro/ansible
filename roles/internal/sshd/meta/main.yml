@@ -1,0 +1,10 @@
+---
+dependencies:
+  - { role: geerlingguy.repo-epel }
+  - { role: resmo.fail2ban }
+
+vars:
+   fail2ban_config_ignoreip:
+      - "127.0.0.1/8"
+      - "{{ nucs }}"
+

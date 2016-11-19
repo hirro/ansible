@@ -1,0 +1,13 @@
+# - name: upgrade packages to be installed
+#   yum: name=* state=latest    
+#   with_items:
+#    - zsh
+#    - wget
+#    - telnet 
+
+- name: Install commonly used packages
+  yum: name={{ item }} state=present
+  with_items:
+   - zsh
+   - wget
+   - telnet

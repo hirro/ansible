@@ -1,0 +1,36 @@
+
+
+
+###############################################################################
+# NGINX settings
+###############################################################################
+nginx_ssl_port: 443
+
+
+
+###############################################################################
+# HAproxy settings
+###############################################################################
+
+# HAProxy supports "http" and "tcp". For SSL, SMTP, etc, use "tcp".
+haproxy_mode: tcp
+
+# Port on which HAProxy should listen
+haproxy_port: 444
+
+# A name for the proxy daemon, this wil be the suffix in the logs.
+haproxy_daemonname: pgwlb
+
+# Balancing Algorithm. Available options:
+# roundrobin, source, leastconn, source, uri
+# (if persistance is required use, "source")
+haproxy_balance: source 
+
+# Ethernet interface on which the load balancer should listen
+# Defaults to the first interface. Change this to:
+#
+#  iface: eth1
+#
+# ...to override.
+#
+haproxy_iface: '{{ ansible_default_ipv4.interface }}'

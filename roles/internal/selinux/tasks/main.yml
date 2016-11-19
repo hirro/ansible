@@ -1,0 +1,19 @@
+- name: Install SE Linux packages
+  yum: name={{ item }} state=present
+  with_items: 
+  - policycoreutils
+  - policycoreutils-python 
+  - selinux-policy 
+  - selinux-policy-targeted 
+  - libselinux-utils 
+  - setroubleshoot-server 
+  - setools 
+  - setools-console 
+  - mcstrans
+  - libselinux-python
+  - libsemanage-python
+
+- name: Make sure SELinux is in enforcing mode
+  selinux: policy=targeted state=enforcing
+  notify: 
+  - reboot
