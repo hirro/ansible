@@ -1,12 +1,39 @@
-- name: Hi
-  shell: ls
+- name: Install Docker py mongo
+  pip: name=pymongo
 
-- name: Install Docker py
-  pip: name=docker-py==1.9.0
-  
-# - name: Create a data container
-#   docker_container:
-#     name: mydata
-#     image: busybox
-#     volumes:
-#       - /data
+- name: Create mongo directory
+  file: path=/opt/mongodb/ state=directory
+
+- name: Copy key file
+  copy: src=mongodb-keyfile dest=/opt/mongodb/keyfile mode=600 owner=999
+
+- name: Create a data container
+  docker_container:
+    name: mydata
+    image: busybox
+    volumes:
+      - /data
+
+- name: Create a MongoDB container
+  docker_container:
+    name: mongo
+    image: mongo:3.4
+    volumes:
+      - /opt/mongodb/keyfile:/opt/mongodb/keyfile:ro
+      - /opt/mongodb:/opt/mongodb/data
+    ports:
+      - "27017:27017"
+    # command: --keyFile /opt/mongodb/keyfile --replSet "rs0" --smallfiles
+    # command: --replSet "rs0" --smallfiles
+    command: --keyFile /opt/mongodb/keyfile --smallfiles
+
+- name: Setup admin user (must be database admin)
+  mongodb_user: login_user=admin login_password=password database=admin name=root password=password state=present
+  # mongodb_user: database=admin name=root password=password state=present
+
+# - name: Create Heroku user
+#   # mongodb_user: login_user=admin login_password=password database=app28333077 name=heroku password=teiMAHuN38oJRqKAg8Pt_bRO state=present
+#   mongodb_user: database=app28333077 name=heroku password=teiMAHuN38oJRqKAg8Pt_bRO state=present
+
+# - name: Set replica set
+#   mongodb_parameter: param="replica_set" param_type="str" value="rs0"

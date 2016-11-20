@@ -1,0 +1,2 @@
+- name: Copy key file
+  copy: src=docker-aliases.sh dest=/etc/profile.d/docker-aliases.sh mode="u=rwx,o=r,g=r"
