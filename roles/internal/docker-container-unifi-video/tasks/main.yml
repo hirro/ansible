@@ -1,0 +1,25 @@
+---
+
+- name: Create required directories
+  file: path=/data/unifi/video state=directory
+
+- name: Start container
+  docker_container:
+    name: unifi-controller
+    image: pducharme/unifi-video-controller
+    restart_policy: unless-stopped    
+    memory: 2G
+    ports:
+      - 6666:6666 
+      - 7080:7080 
+      - 7443:7443 
+      - 7445:7445 
+      - 7446:7446 
+      - 7447:7447
+    volumes:
+      - /data/unifi/video:/var/lib/unifi-video
+      - /data/unifi/logs:/var/log/unifi-video
+ 
+
+
+ 
