@@ -1,0 +1,9 @@
+---
+# Handler for the nginx.
+# See http://docs.ansible.com/playbooks_intro.html for more information about handlers.
+
+- name: redeploy hazelcast container
+  docker:
+    name:  push-server-hazelcast
+    image: hazelcast/hazelcast:3.5.4
+    state: restarted

@@ -1,0 +1,28 @@
+<hazelcast xsi:schemaLocation="http://www.hazelcast.com/schema/config
+    http://www.hazelcast.com/schema/config/hazelcast-config-3.6.xsd"
+    xmlns="http://www.hazelcast.com/schema/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <properties>
+        <property name="hazelcast.logging.type">jdk</property>
+        <property name="hazelcast.version.check.enabled">false</property>
+    </properties>
+
+    <network>
+          <join>
+            <multicast enabled="false" />
+            <tcp-ip enabled="true">
+                <member>127.0.0.1</member>
+                <member>primary-prod-pext00.mideye.ad</member>
+                <member>secondary-prod-pext00.mideye.ad</member>
+            </tcp-ip>
+        </join>
+    </network>
+    <wan-replication name="plus-cluster">
+      <target-cluster group-name="{{ hosts.hazelcast.remotes.01.group.name }}" group-password="{{ hosts.hazelcast.remotes.01.group.password }}">
+        <replication-impl>com.hazelcast.wan.impl.WanNoDelayReplication</replication-impl>
+        <end-points>
+          <address>{{ hosts.hazelcast.remotes.01.address }}</address>
+        </end-points>
+      </target-cluster>
+    </wan-replication>
+</hazelcast>

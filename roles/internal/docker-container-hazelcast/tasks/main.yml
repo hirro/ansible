@@ -1,0 +1,26 @@
+
+- name: Create conf directory for Hazelcast
+  file: path=/opt/hazelcast/conf state=directory
+
+# - name: Apply template for application properties
+#   template: src=hazelcast.xml dest=/opt/hazelcast/hazelcast.xml mode="u+r"
+#   notify:
+#   - redeploy hazelcast container
+
+- name: Create lib directory for Hazelcast
+  file: path=/opt/hazelcast/lib state=directory
+
+- name: Start Hazelcast
+  docker_container:
+    name: push-server-hazelcast
+    image: hazelcast/hazelcast:3.5.4     
+    restart_policy: unless-stopped    
+    env: 
+      JAVA_OOPTS: "-Dhazelcast.config=/opt/hazelcast/hazelcast.xml"
+    volumes:
+      - /opt/hazelcast/hazelcast.xml:/opt/hazelcast/hazelcast.xml  
+    networks:
+      - name: "{{docker_network}}"
+    ports:
+      - "{{ all.hazelcast.instances.hazelcast01.port }}:5701"
+

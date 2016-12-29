@@ -1,0 +1,4 @@
+# Copy common Docker aliases to host 
+- name: Create a Docker network
+  docker_network:
+    name: "{{docker_network}}"

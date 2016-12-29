@@ -1,0 +1,16 @@
+---
+# This playbook deploys the whole application stack in this site.  
+
+# Apply common configuration to worktajm-nginx-
+
+- hosts: hazelcast-cluster
+  max_fail_percentage: 0
+  # serial: 1
+  become: yes
+  vars:
+    timezone: UTC
+  roles:
+  - docker-python
+  - docker-aliases
+  - docker-network
+  - docker-container-hazelcast

@@ -17,12 +17,3 @@
   user: name={{ item }} group=docker append=yes
   with_items:
      - jiar
-
-# - name: Run consul node
-#   docker:
-#     name: swarm
-#     image: swarm
-#     command: "join --advertise {{private_ip}}:4000 consul://{{private_ip}}:8500"
-#     state: started
-#   tags:
-#     - swarm
