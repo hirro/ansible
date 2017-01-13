@@ -1,0 +1,63 @@
+---
+
+- name: unzip is required for unarchive
+  yum: name={{ item }} state=present
+  with_items:
+   - unzip
+   - tar
+
+- name: Create required directories
+  file: path=/opt/graylog state=directory
+
+- name: Download maps from servers
+  get_url:
+    url: http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
+    dest: /opt/graylog/
+  register: downloaded
+
+- shell: gunzip -f /opt/graylog/GeoLite2-City.mmdb.gz
+  when: downloaded|changed
+
+- name: Start mongodb for Graylog
+  docker_container:
+    name: graylog-mongo
+    image: mongo:3
+    restart_policy: unless-stopped    
+    memory: 2G
+ 
+- name: Start elasticsearch for Graylog
+  docker_container:
+    name: graylog-elasticsearch
+    image: elasticsearch:2
+    restart_policy: unless-stopped    
+    memory: 2G
+    command: elasticsearch -Des.cluster.name="graylog" 
+    ports:
+      - 9200:9200      
+      - 9300:9300      
+    env:
+      cluster.name: "graylog"
+ 
+- name: Start Graylog
+  docker_container:
+    name: graylog
+    image: graylog2/server
+    restart_policy: unless-stopped    
+    memory: 2G
+    links:
+      - graylog-mongo:mongo
+      - graylog-elasticsearch:elasticsearch
+    ports:
+      - 514:514
+      - 9000:9000
+      - 12201:12201/udp
+      - 12201:12201
+      - 8880:8880
+      - 12301:12301/udp
+      - 12302:12302/udp
+      - 12303:12303/udp
+    env:
+      GRAYLOG_WEB_ENDPOINT_URI: "http://127.0.0.1:9000/api"
+    volumes:
+      - /opt/graylog/GeoLite2-City.mmdb:/tmp/GeoLite2-City.mmdb
+

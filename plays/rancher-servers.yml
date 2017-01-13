@@ -13,4 +13,8 @@
   - docker-bash-aliases
   - mongodb-cluster
 
+- hosts: log-servers
+  become: yes
+  roles:
+  - { role: docker-containers-graylog,        tags: [ 'setup', 'gelf' ] }    
 

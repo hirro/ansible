@@ -3,3 +3,8 @@
 - src: https://github.com/hirro/ansible-role-fail2ban
   name: resmo.fail2ban
 - src: resmo.ntp
+
+- src: elastic.elasticsearch
+- src: jdauphant.nginx
+- src: lesmyrmidons.mongodb
+- src: Graylog2.graylog-ansible-role
