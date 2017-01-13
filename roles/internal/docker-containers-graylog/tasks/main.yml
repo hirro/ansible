@@ -18,7 +18,7 @@
 - shell: gunzip -f /opt/graylog/GeoLite2-City.mmdb.gz
   when: downloaded|changed
 
-- name: Start mongodb for Graylog
+- name: Start mongodb for Graylog s
   docker_container:
     name: graylog-mongo
     image: mongo:3
