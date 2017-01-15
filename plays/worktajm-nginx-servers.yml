@@ -3,7 +3,7 @@
 
 # Apply common configuration to worktajm-nginx-
 
-- hosts: all
+- hosts: worktajm-nginx-servers
   max_fail_percentage: 0
   # serial: 1
   become: yes

@@ -48,7 +48,7 @@
       - graylog-mongo:mongo
       - graylog-elasticsearch:elasticsearch
     ports:
-      - 514:514
+      - 514:514/udp
       - 9000:9000
       - 12201:12201/udp
       - 12201:12201
@@ -56,6 +56,10 @@
       - 12301:12301/udp
       - 12302:12302/udp
       - 12303:12303/udp
+      - 50514:50514/udp
+      - 50515:50515/udp
+      - 50516:50516/udp
+      - 50517:50517/udp
     env:
       GRAYLOG_WEB_ENDPOINT_URI: "http://127.0.0.1:9000/api"
     volumes:
