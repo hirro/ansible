@@ -9,13 +9,16 @@
   become: yes
   vars:
     timezone: UTC
+    fail2ban_config_bantime: 60
+    fail2ban_config_maxretry: 1
   roles:
-  - sshd
-  - selinux
-  - favorite-yum-packages
-  # - yatesr.timezone
-  - role: ntp
-    ntp_config_server: [3.se.pool.ntp.org, 2.se.pool.ntp.org, 1.se.pool.ntp.org, 0.se.pool.ntp.org]
-  - nginx-worktajm
-  - ntp
+    - geerlingguy.repo-epel
+    # - sshd
+    # - selinux
+    # - favorite-yum-packages
+    # - role: ntp
+      # ntp_config_server: [3.se.pool.ntp.org, 2.se.pool.ntp.org, 1.se.pool.ntp.org, 0.se.pool.ntp.org]
+    - nginx-worktajm
+    - resmo.fail2ban
+    # - ntp
 

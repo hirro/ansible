@@ -8,3 +8,4 @@
 - src: jdauphant.nginx
 - src: lesmyrmidons.mongodb
 - src: Graylog2.graylog-ansible-role
+- src: tersmitten.fail2ban
