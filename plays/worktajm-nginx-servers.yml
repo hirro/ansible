@@ -9,8 +9,9 @@
   become: yes
   vars:
     timezone: UTC
-    fail2ban_config_bantime: 60
+    fail2ban_config_bantime: 86400
     fail2ban_config_maxretry: 1
+    fail2ban_config_ignoreip: 127.0.0.1/8,90.229.133.143
   roles:
     - geerlingguy.repo-epel
     # - sshd
