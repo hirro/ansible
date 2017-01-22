@@ -15,4 +15,18 @@
   # - { role: mongodb-cluster,                      tags: [ 'install', 'mongodb-cluster' ] }
   - { role: docker-swarm-hazelcast,                 tags: [ 'install', 'docker-swarm-hazelcast' ] }
 
+- hosts: graylog-servers
+  become: yes
+  roles:
+  - { role: docker-containers-graylog,        tags: [ 'setup', 'graylog' ] }    
+
+- hosts: unifi-servers
+  # max_fail_percentage: 0
+  # serial: 1
+  become: yes
+  roles:
+  - { role: docker-container-unifi-video,  tags: [ 'setup', 'install', 'video', 'unifi'] }
+  - { role: docker-container-unifi-controller,  tags: [ 'setup', 'install', 'controller', 'unifi'] }  
+
+
 

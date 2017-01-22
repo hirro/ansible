@@ -36,3 +36,9 @@ dip-function() {
 	docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1
 }
 alias dip=dip-function
+
+# Clean voluems
+alias d-list-dangling-volumes='docker volume rm $(docker volume ls -qf dangling=true)'
+
+# Clean dangling volumes
+alias d-clean-dangling-volumes='docker volume rm $(docker volume ls -qf dangling=true)'
