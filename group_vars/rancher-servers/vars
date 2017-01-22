@@ -1,1 +1,2 @@
 virtualenv_path: ~/virtual_env
+docker_network: hazelcast-cluster

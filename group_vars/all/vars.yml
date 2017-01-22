@@ -1,0 +1,4 @@
+ip_addresses:
+  unicorn: 192.168.1.21
+  epyon: 192.168.1.22
+  zero: 192.168.1.23

@@ -12,8 +12,6 @@
   - { role: cchurch.virtualenv,                     tags: [ 'stage' ]}
   - { role: docker-python,                          tags: [ 'stage' ] }
   - { role: docker-bash-aliases,                    tags: [ 'stage' ] }
-  # - { role: mongodb-cluster,                      tags: [ 'install', 'mongodb-cluster' ] }
-  - { role: docker-swarm-hazelcast,                 tags: [ 'install', 'docker-swarm-hazelcast' ] }
 
 - hosts: graylog-servers
   become: yes
