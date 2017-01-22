@@ -6,5 +6,8 @@ httplib2
 # Ansible
 ansible
 
+# Docker
+docker-py
+
 #Other packages
 boto

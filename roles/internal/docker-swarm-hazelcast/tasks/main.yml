@@ -1,0 +1,24 @@
+
+- name: Create conf directory for Hazelcast
+  file: path=/opt/hazelcast/conf state=directory
+
+- name: Create lib directory for Hazelcast
+  file: path=/opt/hazelcast/lib state=directory
+
+- name: install the latest version of Apache
+  yum:
+    name: python-pip
+    state: latest
+    
+- pip:
+    name: docker-py
+    version: 1.10.6
+
+- pip:
+    name: docker-compose
+    version: 1.10.0
+
+- name: Start Hazelcast service
+  docker_service:
+    project_src: hazelcast
+  register: output

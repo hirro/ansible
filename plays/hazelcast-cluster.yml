@@ -4,6 +4,7 @@
 # Apply common configuration to worktajm-nginx-
 
 - hosts: hazelcast-cluster
+  gather_facts: yes
   max_fail_percentage: 0
   # serial: 1
   become: yes
