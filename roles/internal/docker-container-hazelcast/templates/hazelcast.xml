@@ -6,18 +6,28 @@
         <property name="hazelcast.logging.type">jdk</property>
         <property name="hazelcast.version.check.enabled">false</property>
     </properties>
-
-<!-- sdf -->
-
-    <network>
+    <group>
+        <name>dev</name>
+        <password>dev-pass</password>
+    </group>
+<!--     <group>
+        <name>pilot</name>
+        <password>pilot-pass</password>
+    </group>
+    <group>
+        <name>prod</name>
+        <password>prod-pass</password>
+    </group>
+ -->    <network>
         <public-address>{{ host_ip }}:5701</public-address>
         <join>
             <multicast enabled="false" />
             <tcp-ip enabled="true">
-                <member>192.168.1.21</member>
-                <member>192.168.1.22</member>
-                <member>192.168.1.23</member>
+                {% for item in hazelcast_hosts %}
+                <member>{{ item }}</member>
+                {% endfor %}
             </tcp-ip>
         </join>
     </network>
+    <management-center enabled="true">http://192.168.1.21:8080/mancenter</management-center>
 </hazelcast>
