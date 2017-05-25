@@ -1,0 +1,13 @@
+---
+
+- name: Start jhipster-console
+  docker_container:
+    name: jhipster-console
+    image: jhipster/jhipster-console
+    restart_policy: unless-stopped    
+    memory: 2G
+    ports:
+      - 5601:5601
+      - 5000:5000
+      - 9200:9200
+

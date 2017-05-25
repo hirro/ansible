@@ -1,0 +1,12 @@
+---
+# This playbook deploys the whole application stack in this site.  
+
+# Apply common configuration to worktajm-nginx-
+
+- hosts: jhipster-infra-servers
+  become: yes
+  roles:
+  - { role: docker-python,                          tags: [ 'stage' ] }
+  - { role: docker-bash-aliases,                    tags: [ 'stage' ] }    
+  - { role: docker-containers-jhipster-registry,    tags: [ 'setup', 'install' ] }
+  - { role: docker-containers-jhipster-console,     tags: [ 'setup', 'install' ] }
