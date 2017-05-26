@@ -1,0 +1,48 @@
+---
+
+
+- name: Create required directories
+  file: path=/opt/jhipster-console/ state=directory
+
+- name: Installing docker service
+  docker_service:
+    project_name: jhconsole
+    scale:
+      elasticsearch: 1
+      logstash: 1
+      console: 1
+      alerter: 1
+    definition:
+      version: '2'
+      services:
+        elasticsearch:
+            image: jhipster/jhipster-elasticsearch
+            ports:
+                - 9200:9200
+                - 9300:9300
+            ulimits:
+                memlock:
+                    soft: 68719476736
+                    hard: 68719476736
+        logstash:
+            image: jhipster/jhipster-logstash
+            command: logstash -f /conf/logstash.conf
+            ports:
+                - 5000:5000/udp
+        console:
+            image: jhipster/jhipster-console
+            ports:
+                - 5601:5601
+        alerter:
+            image: jhipster/jhipster-alerter
+  register: output
+
+# - debug:
+#     var: output
+
+- assert:
+    that:
+      - "elasticsearch.jhconsole_elasticsearch_1.state.running"      
+      - "logstash.jhconsole_logstash_1.state.running"
+      - "console.jhconsole_console_1.state.running"
+      - "alerter.jhconsole_alerter_1.state.running"      
