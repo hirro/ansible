@@ -29,12 +29,18 @@
             command: logstash -f /conf/logstash.conf
             ports:
                 - 5000:5000/udp
+            environment:
+              - ELASTICSEARCH_URL=jhconsole_elasticsearch_1:9200
         console:
             image: jhipster/jhipster-console
             ports:
                 - 5601:5601
+            environment:
+              - ELASTICSEARCH_URL=jhconsole_elasticsearch_1:9200
         alerter:
             image: jhipster/jhipster-alerter
+            environment:
+              - ELASTICSEARCH_URL=jhconsole_elasticsearch_1:9200
   register: output
 
 # - debug:
