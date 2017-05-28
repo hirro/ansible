@@ -6,7 +6,7 @@
 - hosts: jhipster-infra-servers
   become: yes
   roles:
-  # - { role: docker-python,                          tags: [ 'stage' ] }
+  - { role: docker-python,                          tags: [ 'stage' ] }
   - { role: docker-bash-aliases,                    tags: [ 'stage' ] }    
-  - { role: docker-containers-jhipster-registry,    tags: [ 'setup', 'install' ] }
-  - { role: docker-service-jhipster-console,        tags: [ 'setup', 'install' ] }
+  # - { role: docker-containers-jhipster-registry,    tags: [ 'setup', 'install' ] }
+  - { role: docker-service-jhipster-infra,        tags: [ 'setup', 'install' ] }

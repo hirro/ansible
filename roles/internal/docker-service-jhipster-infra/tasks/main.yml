@@ -1,0 +1,92 @@
+---
+# JHispter Console
+- name: Create required directories
+  file: path=/opt/jhipster-console/ state=directory
+
+# JHipster Registry
+- name: Create required directories
+  file: path=/opt/jhipster-registry/ state=directory
+- name: Copy public key for GIT access
+  copy: content=jim.pub dest=/opt/jhipster-registry/jim.pub mode="u+r"
+
+
+# JHipster Logstash
+- name: Create required directories
+  file: path=/opt/jhipster-logstash/ state=directory
+- name: Copy logstash configuration file
+  copy: content=logstash.conf dest=/opt/jhipster-logstash/logstash.conf mode="u+r"
+
+- name: Installing docker service
+  docker_service:
+    project_name: jhconsole
+    scale:
+      elasticsearch: 1
+      logstash: 1
+      console: 1
+      alerter: 1
+      registry: 1
+    definition:
+      version: '3'
+      services:
+        elasticsearch:
+          image: jhipster/jhipster-elasticsearch
+          container_name: jhelasticsearch
+          ports:
+            - 9200:9200
+            - 9300:9300
+          ulimits:
+            memlock:
+              soft: 68719476736
+              hard: 68719476736
+        logstash:
+          image: jhipster/jhipster-logstash
+          command: logstash -f /conf/logstash.conf
+          container_name: jhlogstash
+          ports:
+            - 5000:5000/udp
+          environment:
+            - ELASTICSEARCH_HOST=http://jh-elasticsearch:9200
+        console:
+          image: jhipster/jhipster-console
+          container_name: jhconsole
+          ports:
+            - 5601:5601
+          environment:
+            - ELASTICSEARCH_URL=jh-elasticsearch:9200
+        alerter:
+          image: jhipster/jhipster-alerter
+          container_name: jhalerter
+          environment:
+            - ELASTICSEARCH_URL=jh-elasticsearch:9200
+        registry:
+          image: jhipster/jhipster-registry
+          container_name: jhregistry
+          deploy:
+            resources:
+              limits:
+                cpus: '0.001'
+                memory: 2G
+              reservations:
+                cpus: '0.0001'
+                memory: 20M
+          ports:
+            - 8761:8761
+          environment:
+            - GIT_URI=https://github.com/hirro/wt-config
+            - GIT_SEARCH_PATHS=""
+            - SPRING_PROFILES_ACTIVE=prod
+          volumes:
+            - /opt/jhipster-registry/jim.pub:/root/.ssh/id_rsa.pub
+
+  register: output
+
+# - debug:
+#     var: elasticsearch
+
+- assert:
+    that:
+      - "elasticsearch.jhelasticsearch"      
+      - "elasticsearch.jhelasticsearch.state.running"      
+      - "logstash.jhlogstash.state.running"
+      - "console.jhconsole.state.running"
+      - "alerter.jhalerter.state.running"
