@@ -29,7 +29,7 @@
       version: '3'
       services:
         elasticsearch:
-          image: jhipster/jhipster-elasticsearch
+          image: jhipster/jhipster-elasticsearch:v2.0.1
           container_name: jh_elasticsearch
           ports:
             - 9200:9200
@@ -43,7 +43,7 @@
             - "zero:192.168.1.22"
             - "epyon:192.168.1.23"
         logstash:
-          image: jhipster/jhipster-logstash
+          image: jhipster/jhipster-logstash:v2.0.1
           command: logstash -f /conf/logstash.conf
           container_name: jh_logstash
           depends_on:
@@ -57,7 +57,7 @@
             - "zero:192.168.1.22"
             - "epyon:192.168.1.23"
         console:
-          image: jhipster/jhipster-console
+          image: jhipster/jhipster-console:v2.0.1
           container_name: jh_console
           depends_on:
             - elasticsearch
@@ -70,7 +70,7 @@
             - "zero:192.168.1.22"
             - "epyon:192.168.1.23"
         alerter:
-          image: jhipster/jhipster-alerter
+          image: jhipster/jhipster-alerter:v2.0.1
           container_name: jh_alerter
           environment:
             - ELASTICSEARCH_URL=unicorn:9200
@@ -79,7 +79,7 @@
             - "zero:192.168.1.22"
             - "epyon:192.168.1.23"
         registry:
-          image: jhipster/jhipster-registry
+          image: jhipster/jhipster-registry:v3.0.1
           container_name: jh_registry
           deploy:
             resources:
