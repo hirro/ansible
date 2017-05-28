@@ -1,8 +1,15 @@
 ---
 
 
+# JHispter console dirs
 - name: Create required directories
   file: path=/opt/jhipster-console/ state=directory
+
+# Logstash dirs
+- name: Create required directories
+  file: path=/opt/jhipster-logstash/ state=directory
+- name: Copy logstash configuration file
+  copy: content=logstash.conf dest=/opt/jhipster-logstash/logstash.conf mode="u+r"
 
 - name: Installing docker service
   docker_service:
@@ -27,10 +34,12 @@
         logstash:
             image: jhipster/jhipster-logstash
             command: logstash -f /conf/logstash.conf
+            volumes:
+               - /opt/jhipster-logstash/:/conf            
             ports:
                 - 5000:5000/udp
             environment:
-              - ELASTICSEARCH_URL=jhconsole_elasticsearch_1:9200
+              - ELASTICSEARCH_HOST=http://jhconsole_elasticsearch_1:9200
         console:
             image: jhipster/jhipster-console
             ports:
