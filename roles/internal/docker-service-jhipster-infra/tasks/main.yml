@@ -47,7 +47,7 @@
           command: logstash -f /conf/logstash.conf
           container_name: jh_logstash
           depends_on:
-            - jh_elasticsearch
+            - elasticsearch
           ports:
             - 5000:5000/udp
           environment:
@@ -60,7 +60,7 @@
           image: jhipster/jhipster-console
           container_name: jh_console
           depends_on:
-            - jh_elasticsearch
+            - elasticsearch
           ports:
             - 5601:5601
           environment:
