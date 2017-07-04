@@ -1,0 +1,16 @@
+---
+
+- name: Start container
+  docker_container:
+    name: smtp
+    image: namshi/smtp:latest
+    restart_policy: unless-stopped    
+    memory: 1G
+    ports:
+      - "25:25"
+    env: 
+      RELAY_NETWORKS: "{{vault_smpt_relay_networks}}"
+      GMAIL_USER: "{{vault_smtp_gmail_user}}"
+      GMAIL_PASSWORD: "{{vault_smtp_gmail_password}}"
+
+ 
