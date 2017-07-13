@@ -1,0 +1,36 @@
+---
+
+- name: Create conf.d dir
+  file: path=/opt/nginx/conf.d state=directory
+- name: Copy conf.d files
+  copy: src=haspian.conf dest=/opt/nginx/conf.d/haspian.conf mode="u+r"
+
+- name: Create keys dir
+  file: path=/opt/nginx/keys state=directory
+- copy: src=/Volumes/ac/letsencrypt/letsencrypt/live/arnellconsulting.dyndns.org/fullchain.pem dest=/opt/nginx/keys/trustchain.crt mode="u+r"
+- copy: src=/Volumes/ac/letsencrypt/letsencrypt/live/arnellconsulting.dyndns.org/fullchain.pem dest=/opt/nginx/keys/fullchain.pem mode="u+r"
+- copy: src=/Volumes/ac/letsencrypt/letsencrypt/live/arnellconsulting.dyndns.org/privkey.pem dest=/opt/nginx/keys/privkey.pem mode="u+r"
+- copy: src=dhparam.pem dest=/opt/nginx/keys/dhparam.pem mode="u+r"
+
+- name: Start NGINX
+  docker_container:
+    name: nginx
+    image: nginx
+    restart_policy: unless-stopped    
+    env: 
+    networks:
+      - name: "{{docker_network}}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/opt/nginx/conf.d:/etc/nginx/conf.d"
+      - "/opt/nginx/dhparam/dhparam.pem:/etc/nginx/dhparam/dhparam.pem"
+      - "/opt/nginx/keys/trustchain.crt:/etc/nginx/keys/trustchain.crt"
+      - "/opt/nginx/keys/fullchain.pem:/etc/nginx/keys/fullchain.pem"
+      - "/opt/nginx/keys/privkey.pem:/etc/nginx/keys/privkey.pem"
+      - "/opt/nginx/keys/dhparam.pem:/etc/nginx/keys/dhparam.pem"
+
+
+
+
