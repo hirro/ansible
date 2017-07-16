@@ -47,7 +47,7 @@
 - hosts: rancher-server-servers
   become: yes
   roles:
-  - { role: docker-container-rancher-server,         tags: [ 'install', 'rancher-servers' ] }
+  - { role: docker-container-glance,                 tags: [ 'install', 'glance' ] }
 
 - hosts: nginx-servers
   become: yes
