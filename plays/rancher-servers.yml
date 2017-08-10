@@ -39,11 +39,6 @@
   roles:
   - { role: docker-container-smtp,                   tags: [ 'install', 'smtp' ] }
 
-- hosts: openhab-servers
-  become: yes
-  roles:
-  - { role: docker-container-openhab,                tags: [ 'install', 'openhab' ] }
-
 - hosts: rancher-server-servers
   become: yes
   roles:
