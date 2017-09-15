@@ -21,8 +21,11 @@ resolver_timeout 10s;
 # proxy_hide_header X-Application-Context;
 
 # General SSL/TLS settings
-ssl_certificate      /etc/nginx/keys/server.crt;
-ssl_certificate_key  /etc/nginx/keys/server.key;
+#ssl_certificate      /etc/nginx/keys/server.crt;
+#ssl_certificate_key  /etc/nginx/keys/server.key;
+#ssl_dhparam          /etc/nginx/keys/dhparam.pem;
+ssl_certificate      /etc/letsencrypt/live/worktajm.com/fullchain.pem;
+ssl_certificate_key  /etc/letsencrypt/live/worktajm.com/privkey.pem;
 ssl_dhparam          /etc/nginx/keys/dhparam.pem;
 ssl_session_timeout  5m;
 
