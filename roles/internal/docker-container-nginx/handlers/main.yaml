@@ -1,0 +1,6 @@
+---
+- name: restart nginx container
+  docker_container:
+    name: nginx
+    state: started
+    restart: yes
