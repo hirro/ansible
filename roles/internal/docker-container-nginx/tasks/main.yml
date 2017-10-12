@@ -11,7 +11,7 @@
   file: path=/opt/nginx/keys state=directory
 - copy: src=dhparam.pem dest=/opt/nginx/keys/dhparam.pem mode="u+r"
   notify: restart nginx container
-
+- copy: src=renew-certs.sh dest=/home/rancher/renew-certs.sh mode="u+rx" owner="rancher"
 # - copy: src=/Volumes/ac/letsencrypt/letsencrypt/live/arnellconsulting.dyndns.org/fullchain.pem dest=/opt/nginx/keys/trustchain.crt mode="u+r"
 #   notify: restart nginx container
 # - copy: src=/Volumes/ac/letsencrypt/letsencrypt/live/arnellconsulting.dyndns.org/fullchain.pem dest=/opt/nginx/keys/fullchain.pem mode="u+r"
