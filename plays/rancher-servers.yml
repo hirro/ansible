@@ -21,8 +21,8 @@
 - hosts: unifi-servers
   become: yes
   roles:
-  - { role: docker-container-unifi-video,           tags: [ 'setup', 'install', 'video', 'unifi' ] }
-  - { role: docker-container-unifi-controller,      tags: [ 'setup', 'install', 'controller', 'unifi' ] }
+  - { role: docker-container-unifi-video,           tags: [ 'setup', 'install', 'unifi-video' ] }
+  - { role: docker-container-unifi-controller,      tags: [ 'setup', 'install', 'unifi-controller' ] }
 
 - hosts: hazelcast-servers
   become: yes
