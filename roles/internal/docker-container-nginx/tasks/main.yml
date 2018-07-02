@@ -3,8 +3,11 @@
 - name: Create conf.d dir
   file: path=/opt/nginx/conf.d state=directory
   notify: restart nginx container
-- name: Copy conf.d files
+- name: Copy conf.d files for Home Assistant
   copy: src=haspian.conf dest=/opt/nginx/conf.d/haspian.conf mode="u+r"
+  notify: restart nginx container
+- name: Copy conf.d files for Worktajm
+  copy: src=worktajm.conf dest=/opt/nginx/conf.d/worktajm.conf mode="u+r"
   notify: restart nginx container
 
 - name: Create keys dir

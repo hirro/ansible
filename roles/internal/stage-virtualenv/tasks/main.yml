@@ -1,0 +1,6 @@
+- name: Copy NGINX server.crt
+  copy: src=extensions/setup/python_requirements.txt dest=~/python_requirements.txt mode="u+r"
+
+- name: Setup python virtual environment on host
+  virtualenv:
+    virtualenv_recreate: false
