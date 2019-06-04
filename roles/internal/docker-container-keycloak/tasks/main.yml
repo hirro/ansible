@@ -1,0 +1,18 @@
+---
+
+- name: Start container
+  docker_container:
+    name: keycloak
+    image: jboss/keycloak
+    restart_policy: unless-stopped    
+    memory: 2G
+    ports:
+      - 58080:8080
+      - 59990:9990
+      - 58443:8443
+    env: 
+      KEYCLOAK_USER: "{{vault_keycloak_user}}"
+      DB_VENDOR: "h2"
+      KEYCLOAK_PASSWORD: "{{vault_keycloak_password}}"
+      KEYCLOAK_HOSTNAME: "keycloak.arnellconsulting.dyndns.org"
+ 

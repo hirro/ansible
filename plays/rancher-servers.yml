@@ -48,3 +48,8 @@
   become: yes
   roles:
   - { role: docker-container-nginx,                  tags: [ 'install', 'nginx' ] }
+
+- hosts: keycloak-servers
+  become: yes
+  roles:
+  - { role: docker-container-keycloak,                  tags: [ 'install', 'keycloak' ] }
