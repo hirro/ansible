@@ -9,7 +9,7 @@
 - name: Start container
   docker_container:
     name: unifi-video
-    image: pducharme/unifi-video-controller:5.10.25
+    image: pducharme/unifi-video-controller:3.10.6
     restart_policy: unless-stopped
     memory: 2G
     ports:
