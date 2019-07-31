@@ -16,13 +16,22 @@
     restart_policy: unless-stopped
     memory: 2G
     ports:
+      - 1935:1935
       - 6666:6666
       - 7080:7080
+      - 7442:7442
       - 7443:7443
+      - 7444:7444
       - 7445:7445
       - 7446:7446
       - 7447:7447
+      - 10002:10001
     volumes:
-      - /data/unifi/video:/var/lib/unifi-video
-      - /data/unifi/logs:/var/log/unifi-video
-      - /data/unifi/cache:/var/cache/unifi-video
+      - UnifiVideoDataVolume:/var/lib/unifi-video
+      - UnifiVideoDataVolume:/var/lib/unifi-video/videos
+    # env:
+    #    PUID: "1100"
+    #    PGID: "1101"
+    capabilities:
+      - SYS_ADMIN
+      - DAC_READ_SEARCH
