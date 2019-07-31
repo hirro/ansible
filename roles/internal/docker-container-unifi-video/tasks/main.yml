@@ -2,7 +2,10 @@
 
 - name: Create required directories
   file: path=/data/unifi/video state=directory
-
+- name: Create required directories
+  file: path=/data/unifi/logs state=directory
+- name: Create required directories
+  file: path=/data/unifi/cache state=directory
 - name: Copy system properties
   copy: content="system.properties" dest=/data/unifi/video/system.properties mode="u+r"
 
@@ -22,3 +25,4 @@
     volumes:
       - /data/unifi/video:/var/lib/unifi-video
       - /data/unifi/logs:/var/log/unifi-video
+      - /data/unifi/cache:/var/cache/unifi-video
