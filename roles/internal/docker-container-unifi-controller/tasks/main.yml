@@ -6,8 +6,8 @@
 - name: Start container
   docker_container:
     name: unifi-controller
-    image: jacobalberty/unifi:5.5.24
-    restart_policy: unless-stopped    
+    image: jacobalberty/unifi:5.10.25
+    restart_policy: unless-stopped
     memory: 2G
     ports:
       - 8080:8080
@@ -15,4 +15,3 @@
       - 8443:8443
       - 8843:8843
       - 8880:8880
- 
