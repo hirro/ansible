@@ -12,6 +12,9 @@
 - name: Copy conf.d files for KeyCloak
   copy: src=keycloak.conf dest=/opt/nginx/conf.d/keycloak.conf mode="u+r"
   notify: restart nginx container
+- name: Copy conf.d files for OIDC
+  copy: src=keycloak.conf dest=/opt/nginx/conf.d/oidc.conf mode="u+r"
+  notify: restart nginx container
 
 - name: Create keys dir
   file: path=/opt/nginx/keys state=directory
@@ -29,8 +32,8 @@
   docker_container:
     name: nginx
     image: nginx
-    restart_policy: unless-stopped    
-    env: 
+    restart_policy: unless-stopped
+    env:
     networks:
       - name: "{{docker_network}}"
     ports:
@@ -42,7 +45,3 @@
       - "/etc/letsencrypt/live/arnellconsulting.dyndns.org/trustchain.crt:/etc/nginx/keys/trustchain.crt"
       - "/etc/letsencrypt/live/arnellconsulting.dyndns.org/fullchain.pem:/etc/nginx/keys/fullchain.pem"
       - "/etc/letsencrypt/live/arnellconsulting.dyndns.org/privkey.pem:/etc/nginx/keys/privkey.pem"
-
-
-
-
