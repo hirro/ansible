@@ -13,7 +13,7 @@
   copy: src=keycloak.conf dest=/opt/nginx/conf.d/keycloak.conf mode="u+r"
   notify: restart nginx container
 - name: Copy conf.d files for OIDC
-  copy: src=keycloak.conf dest=/opt/nginx/conf.d/oidc.conf mode="u+r"
+  copy: src=oidc.conf dest=/opt/nginx/conf.d/oidc.conf mode="u+r"
   notify: restart nginx container
 
 - name: Create keys dir
@@ -42,6 +42,6 @@
     volumes:
       - "/opt/nginx/conf.d:/etc/nginx/conf.d"
       - "/opt/nginx/keys/dhparam.pem:/etc/nginx/keys/dhparam.pem"
-      - "/etc/letsencrypt/live/arnellconsulting.dyndns.org/trustchain.crt:/etc/nginx/keys/trustchain.crt"
-      - "/etc/letsencrypt/live/arnellconsulting.dyndns.org/fullchain.pem:/etc/nginx/keys/fullchain.pem"
-      - "/etc/letsencrypt/live/arnellconsulting.dyndns.org/privkey.pem:/etc/nginx/keys/privkey.pem"
+      - "/etc/letsencrypt/live/arnellconsulting.dyndns.org-0004/trustchain.crt:/etc/nginx/keys/trustchain.crt"
+      - "/etc/letsencrypt/live/arnellconsulting.dyndns.org-0004/fullchain.pem:/etc/nginx/keys/fullchain.pem"
+      - "/etc/letsencrypt/live/arnellconsulting.dyndns.org-0004/privkey.pem:/etc/nginx/keys/privkey.pem"

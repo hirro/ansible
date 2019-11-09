@@ -7,6 +7,6 @@
 - src: jdauphant.nginx
 - src: lesmyrmidons.mongodb
 - src: Graylog2.graylog-ansible-role
-- src: tersmitten.fail2ban
+#- src: tersmitten.fail2ban
 - src: cchurch.virtualenv
 # - src: franklinkim.docker-compose
