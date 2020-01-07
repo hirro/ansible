@@ -1,9 +1,9 @@
 ---
-# This playbook deploys the whole application stack in this site.  
+# This playbook deploys the whole application stack in this site.
 
 # Apply common configuration to worktajm-nginx-
 
-- hosts: rancher-servers
+- hosts: hazelcast-servers
   gather_facts: yes
   max_fail_percentage: 0
   # serial: 1
@@ -11,7 +11,20 @@
   vars:
     timezone: UTC
   roles:
-  - docker-python
-  - docker-aliases
-  - docker-network
+  # - docker-python
+  # - docker-aliases
+  # - docker-network
   - docker-container-hazelcast
+
+- hosts: hazelcast-mmc-servers
+  gather_facts: yes
+  max_fail_percentage: 0
+  # serial: 1
+  become: yes
+  vars:
+    timezone: UTC
+  roles:
+  # - docker-python
+  # - docker-aliases
+  # - docker-network
+  - docker-container-hazelcast-mmc

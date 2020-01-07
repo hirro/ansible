@@ -18,14 +18,14 @@
 - name: Start Hazelcast
   docker_container:
     name: hazelcast
-    image: hazelcast/hazelcast:3.5.4     
-    restart_policy: unless-stopped    
-    env: 
-      JAVA_OPTS: "-Dhazelcast.config=/opt/hazelcast/hazelcast.xml"
+    image: hazelcast/hazelcast:3.12.5
+    restart_policy: unless-stopped
+    env:
+      JAVA_OPTS: "-Dhazelcast.config=/opt/hazelcast/hazelcast.xml -Dhazelcast.mc.rest.enabled=true"
+      MANCENTER_URL: "http://docker_management-center_1:8080/hazelcast-mancenter"
     volumes:
-      - /opt/hazelcast/hazelcast.xml:/opt/hazelcast/hazelcast.xml  
+      - /opt/hazelcast/hazelcast.xml:/opt/hazelcast/hazelcast.xml
     networks:
       - name: "{{docker_network}}"
     ports:
       - "5701:5701"
-

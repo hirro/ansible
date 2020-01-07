@@ -2,12 +2,11 @@
 
 - name: Start Hazelcast MMC
   docker_container:
-    name: hazelcast
-    image: hazelcast/management-center:3.5.4    
-    restart_policy: unless-stopped    
-    env: 
+    name: hazelcast-mmc
+    image: hazelcast/management-center:3.12.8
+    restart_policy: unless-stopped
+    env:
     networks:
       - name: "{{docker_network}}"
     ports:
       - "8080:8080"
-
